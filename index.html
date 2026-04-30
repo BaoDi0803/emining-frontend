@@ -3,245 +3,720 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E-Mining AI — Khai khoáng rác điện tử</title>
+<title>E-Mining AI - Hành trình Tái sinh</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
-  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 16px 24px;
-            display: flex; align-items: center; gap: 12px; }
-  .logo { width: 32px; height: 32px; background: #1D9E75; border-radius: 8px;
-          display: flex; align-items: center; justify-content: center; }
-  .logo svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; }
-  h1 { font-size: 16px; font-weight: 600; }
-  .subtitle { font-size: 12px; color: #8b949e; }
-  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  @media(max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-  .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 16px; }
-  .card-title { font-size: 13px; font-weight: 500; color: #8b949e; margin-bottom: 12px;
-                text-transform: uppercase; letter-spacing: 0.5px; }
-  #drop-zone { border: 2px dashed #30363d; border-radius: 10px; padding: 32px 16px;
-               text-align: center; cursor: pointer; transition: all 0.2s; }
-  #drop-zone:hover, #drop-zone.drag-over { border-color: #1D9E75; background: rgba(29,158,117,0.05); }
-  #drop-zone p { font-size: 13px; color: #8b949e; margin-top: 8px; }
-  #preview { width: 100%; border-radius: 8px; display: none; margin-bottom: 12px; }
-  .btn { width: 100%; padding: 10px; background: #1D9E75; color: white; border: none;
-         border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
-  .btn:hover { background: #15785a; }
-  .btn:disabled { background: #30363d; color: #8b949e; cursor: not-allowed; }
-  .comp-item { display: flex; align-items: center; gap: 10px; padding: 10px 0;
-               border-bottom: 1px solid #21262d; }
-  .comp-item:last-child { border-bottom: none; }
-  .comp-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .comp-name { font-size: 13px; font-weight: 500; flex: 1; }
-  .comp-val { font-size: 12px; color: #8b949e; }
-  .comp-credit { font-size: 11px; background: rgba(29,158,117,0.15); color: #1D9E75;
-                 padding: 2px 7px; border-radius: 4px; }
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-  .stat { background: #161b22; border: 1px solid #30363d; border-radius: 10px;
-          padding: 14px; text-align: center; }
-  .stat-val { font-size: 22px; font-weight: 600; margin-bottom: 2px; }
-  .stat-label { font-size: 11px; color: #8b949e; }
-  .empty { display: flex; flex-direction: column; align-items: center; justify-content: center;
-           min-height: 120px; color: #8b949e; font-size: 13px; }
-  .empty svg { width: 32px; height: 32px; stroke: #30363d; fill: none; stroke-width: 1.5; margin-bottom: 8px; }
-  .scanning { display: flex; align-items: center; justify-content: center; gap: 8px;
-              min-height: 120px; color: #1D9E75; font-size: 13px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner { width: 20px; height: 20px; border: 2px solid #30363d; border-top-color: #1D9E75;
-             border-radius: 50%; animation: spin 0.8s linear infinite; }
-  .total-row { display: flex; justify-content: space-between; align-items: center;
-               padding-top: 10px; margin-top: 6px; border-top: 1px solid #21262d; }
-  .total-label { font-size: 12px; color: #8b949e; }
-  .total-val { font-size: 18px; font-weight: 600; color: #1D9E75; }
-  .badge-demo { background: rgba(186,117,23,0.15); color: #EF9F27; font-size: 11px;
-                padding: 3px 8px; border-radius: 4px; margin-left: 8px; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#FDFBF7;color:#4A4D46;font-size:13px;line-height:1.5}
+.app{max-width:900px;margin:0 auto;background:#FDFBF7;min-height:100vh}
+
+/* HEADER */
+.hdr{background:#FFFFFF;border-bottom:1px solid #EEEBE3;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.02)}
+.logo{width:32px;height:32px;background:#6B8E76;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+.hdr h1{font-size:15px;font-weight:600;color:#2C302B}
+.hdr p{font-size:11px;color:#8E958F;margin-top:2px}
+.nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nb{background:none;border:none;color:#8E958F;font-size:12px;font-weight:500;padding:8px 12px;border-radius:8px;cursor:pointer;transition:all .3s ease}
+.nb:hover{color:#6B8E76;background:#F4F7F5}
+.nb.on{background:#EDF2EE;color:#52755C;font-weight:600}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:16px 20px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(3,1fr)}}
+.stat{background:#FFFFFF;border:1px solid #EEEBE3;border-radius:12px;padding:12px;text-align:center;position:relative;box-shadow:0 2px 8px rgba(0,0,0,0.015)}
+.sv{font-size:18px;font-weight:600;margin-bottom:4px}
+.sl{font-size:11px;color:#8E958F;font-weight:500}
+.stat-dot{width:8px;height:8px;border-radius:50%;position:absolute;top:10px;right:10px}
+
+.body{padding:12px 20px 60px}
+.page{display:none;animation:fadeIn .4s ease}.page.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS & CONTAINERS */
+.card{background:#FFFFFF;border:1px solid #EEEBE3;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.ct{font-size:11px;font-weight:600;color:#8E958F;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+
+/* BUTTONS */
+.btn{padding:10px 16px;border:none;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s ease}
+.btn-g{background:#6B8E76;color:#fff;box-shadow:0 2px 6px rgba(107,142,118,0.3)}
+.btn-g:hover{background:#52755C;transform:translateY(-1px)}
+.btn-g:disabled{background:#E0E5E2;color:#A8B0AB;cursor:not-allowed;box-shadow:none;transform:none}
+.btn-o{background:#FFFFFF;color:#4A4D46;border:1px solid #D6D2C4}
+.btn-o:hover{background:#FDFBF7;border-color:#6B8E76;color:#6B8E76}
+.btn-red{background:#FFF0F0;color:#D85A5A;border:1px solid #FCDCDC}
+.btn-w{width:100%}
+
+/* SCAN AREA */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:650px){.grid2{grid-template-columns:1fr}}
+.drop{border:2px dashed #D6D2C4;background:#FAFAF8;border-radius:12px;padding:30px 16px;text-align:center;cursor:pointer;transition:all .3s ease;margin-bottom:16px}
+.drop:hover{border-color:#6B8E76;background:#F4F7F5}
+.drop svg{width:32px;height:32px;stroke:#6B8E76;fill:none;stroke-width:1.5;margin-bottom:8px}
+.drop p{font-size:12px;color:#707C74;margin-top:4px}
+#prev{width:100%;border-radius:10px;display:none;margin-bottom:16px;max-height:160px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+
+.cam-view{background:#2C302B;border-radius:12px;position:relative;overflow:hidden;margin-bottom:16px;min-height:180px;display:flex;align-items:center;justify-content:center}
+.cam-view video{width:100%;border-radius:12px;display:block}
+.cam-off{color:#A8B0AB;font-size:12px;text-align:center;padding:20px 0}
+.cam-btn-row{display:flex;gap:10px;margin-bottom:16px}
+.scan-line{position:absolute;left:0;right:0;height:3px;background:rgba(107,142,118,0.8);top:0;animation:sl 2s ease-in-out infinite;opacity:0;pointer-events:none;box-shadow:0 0 8px #6B8E76}
+@keyframes sl{0%{top:5%;opacity:1}90%{top:95%;opacity:1}100%{top:95%;opacity:0}}
+
+/* COMPONENTS */
+.comp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed #EEEBE3}
+.comp-row:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tag{font-size:11px;padding:3px 8px;border-radius:6px;font-weight:500}
+.tag-g{background:#EDF2EE;color:#52755C}
+.tag-y{background:#FFF6E5;color:#C7821E}
+.tag-b{background:#F4F4F5;color:#707C74}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;color:#8E958F;font-size:12px;gap:8px}
+.empty svg{width:28px;height:28px;stroke:#D6D2C4;fill:none;stroke-width:1.5}
+.total-bar{display:flex;justify-content:space-between;align-items:center;padding-top:12px;margin-top:8px;border-top:1px solid #EEEBE3;background:#FAFAF8;padding:12px;border-radius:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{width:18px;height:18px;border:2px solid #D6D2C4;border-top-color:#6B8E76;border-radius:50%;animation:spin .8s linear infinite}
+.scanning{display:flex;align-items:center;justify-content:center;gap:10px;min-height:120px;color:#6B8E76;font-size:12px;font-weight:500}
+
+/* FORMS */
+.post-form{background:#FAFAF8;border-radius:12px;padding:16px;margin-top:16px;border:1px solid #EEEBE3}
+.inp{width:100%;background:#FFFFFF;border:1px solid #D6D2C4;border-radius:8px;padding:10px 12px;color:#4A4D46;font-size:13px;outline:none;margin-bottom:12px;transition:border-color .2s}
+.inp:focus{border-color:#6B8E76;box-shadow:0 0 0 3px rgba(107,142,118,0.1)}
+.inp-row{display:flex;gap:12px}
+.inp-row .inp{margin-bottom:0}
+.radio-group{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.radio-opt{flex:1;background:#FFFFFF;border:1px solid #D6D2C4;border-radius:10px;padding:12px;cursor:pointer;transition:all .2s ease;min-width:140px}
+.radio-opt.sel{border-color:#6B8E76;background:#EDF2EE;box-shadow:0 2px 6px rgba(107,142,118,0.15)}
+.radio-opt p{font-size:13px;font-weight:500;color:#2C302B}
+.radio-opt span{font-size:11px;color:#707C74;display:block;margin-top:4px}
+
+/* LISTINGS */
+.listing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:550px){.listing-grid{grid-template-columns:1fr}}
+.listing-card{background:#FFFFFF;border:1px solid #EEEBE3;border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+.listing-card:hover{border-color:#6B8E76;transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.06)}
+.listing-img{width:100%;height:120px;background:#F4F7F5;display:flex;align-items:center;justify-content:center}
+.listing-img svg{width:36px;height:36px;stroke:#A8B0AB;fill:none;stroke-width:1.5}
+.listing-body{padding:16px}
+.listing-title{font-size:14px;font-weight:600;color:#2C302B;margin-bottom:6px}
+.listing-sub{font-size:12px;color:#707C74;margin-bottom:10px}
+.listing-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px dashed #EEEBE3}
+.price{font-size:15px;font-weight:600;color:#52755C}
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-btn{background:#FFFFFF;border:1px solid #D6D2C4;color:#707C74;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;cursor:pointer;transition:all .2s}
+.filter-btn:hover{background:#FAFAF8}
+.filter-btn.on{background:#6B8E76;border-color:#6B8E76;color:#FFFFFF;box-shadow:0 2px 6px rgba(107,142,118,0.2)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(44,48,43,.6);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-bg.on{display:flex;animation:fadeIn .3s ease}
+.modal{background:#FDFBF7;border:1px solid #EEEBE3;border-radius:20px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #EEEBE3;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(253,251,247,0.95);backdrop-filter:blur(10px);z-index:10}
+.modal-hdr h3{font-size:16px;font-weight:600;color:#2C302B}
+.close-btn{background:#F4F4F5;border:none;color:#707C74;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.close-btn:hover{background:#E8EAE8;color:#2C302B}
+.modal-body{padding:20px}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #EEEBE3;font-size:13px}
+.info-row:last-child{border-bottom:none}
+.il{color:#707C74}
+
+/* CHAT */
+.chat-area{height:220px;overflow-y:auto;background:#FAFAF8;border:1px solid #EEEBE3;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:80%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.msg-me{background:#6B8E76;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg-other{background:#FFFFFF;border:1px solid #EEEBE3;color:#4A4D46;align-self:flex-start;border-bottom-left-radius:4px}
+.msg-time{font-size:10px;opacity:.7;margin-top:4px;text-align:right}
+.chat-inp-row{display:flex;gap:8px}
+.chat-inp{flex:1;background:#FFFFFF;border:1px solid #D6D2C4;border-radius:24px;padding:10px 16px;color:#4A4D46;font-size:13px;outline:none;transition:.2s}
+.chat-inp:focus{border-color:#6B8E76;box-shadow:0 0 0 3px rgba(107,142,118,0.1)}
+
+/* HISTORY & LEADERBOARD */
+.hist-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #EEEBE3}
+.hist-item:last-child{border-bottom:none}
+.hist-icon{width:40px;height:40px;background:#EDF2EE;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hist-icon svg{width:18px;height:18px;stroke:#52755C;fill:none;stroke-width:1.8}
+.tx-row{background:#FFFFFF;border:1px solid #EEEBE3;border-radius:10px;padding:12px;margin-bottom:10px;font-size:12px;box-shadow:0 2px 4px rgba(0,0,0,0.01)}
+.tx-hash{color:#8E958F;font-family:'Courier New', monospace;font-size:10px;margin-top:6px;background:#F4F4F5;padding:4px 8px;border-radius:4px;word-break:break-all}
+.prog-bar{background:#EEEBE3;border-radius:6px;height:8px;margin-top:8px;overflow:hidden}
+.prog-fill{height:100%;border-radius:6px;background:linear-gradient(90deg, #6B8E76, #8FAD98);transition:width .8s ease}
+.reward-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px dashed #EEEBE3}
+.reward-row:last-child{border-bottom:none}
+.rw-icon{width:40px;height:40px;background:#FAFAF8;border:1px solid #EEEBE3;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #EEEBE3}
+.lb-row:last-child{border-bottom:none}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+.green{color:#52755C}
+.section-label{font-size:12px;font-weight:600;color:#4A4D46;margin-bottom:8px;margin-top:8px}
+.tab-row{display:flex;gap:8px;margin-bottom:16px;background:#FAFAF8;padding:6px;border-radius:12px;border:1px solid #EEEBE3}
+.tab{flex:1;background:transparent;border:none;color:#707C74;font-size:12px;font-weight:500;padding:8px 12px;border-radius:8px;cursor:pointer;transition:.2s}
+.tab.on{background:#FFFFFF;color:#52755C;box-shadow:0 2px 6px rgba(0,0,0,0.04);font-weight:600}
+
+/* MY LISTINGS MINI PANEL */
+.my-listing-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #EEEBE3;transition:background .2s;border-radius:8px}
+.my-listing-row:hover{background:#FAFAF8}
+.my-listing-row:last-child{border-bottom:none}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div class="logo">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-  </div>
-  <div>
-    <h1>E-Mining AI</h1>
-    <div class="subtitle">Khai khoáng rác điện tử bằng trí tuệ nhân tạo</div>
+<div class="app">
+<div class="hdr">
+  <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+  <div><h1>E-Mining AI</h1><p>Trạm Tái Sinh & Vòng Đời Mới</p></div>
+  <div class="nav">
+    <button class="nb on" onclick="gp('scan',this)">🌱 Nhận diện</button>
+    <button class="nb" onclick="gp('market',this)">🏕️ Trạm xanh</button>
+    <button class="nb" onclick="gp('history',this)">📖 Dấu ấn</button>
+    <button class="nb" onclick="gp('leaderboard',this)">🌟 Lan tỏa</button>
+    <button class="nb" onclick="gp('profile',this)">🌿 Hồ sơ</button>
   </div>
 </div>
 
-<div class="container">
+<!-- STATS BAR -->
+<div class="stats">
+  <div class="stat">
+    <div class="sv green" id="s-credits">0</div>
+    <div class="sl">Tín chỉ xanh</div>
+  </div>
+  <div class="stat">
+    <div class="sv" id="s-boards">0</div>
+    <div class="sl">Linh kiện đã cứu</div>
+  </div>
+  <div class="stat">
+    <div class="stat-dot" style="background:#6B8E76" id="dot-listing"></div>
+    <div class="sv" style="color:#D98A6C" id="s-listing-active">0</div>
+    <div class="sl">Chờ trao gửi</div>
+  </div>
+  <div class="stat">
+    <div class="sv" style="color:#8b8ff5" id="s-sold">0</div>
+    <div class="sl">Đã tìm chủ mới</div>
+  </div>
+  <div class="stat">
+    <div class="sv" style="color:#6B8E76" id="s-co2">0g</div>
+    <div class="sl">CO₂ giảm tải</div>
+  </div>
+  <div class="stat">
+    <div class="sv" style="color:#D98A6C" id="s-vnd">0</div>
+    <div class="sl">Giá trị (nghìn đ)</div>
+  </div>
+</div>
 
-  <div class="stat-grid">
-    <div class="stat">
-      <div class="stat-val" id="s-credits" style="color:#1D9E75;">0</div>
-      <div class="stat-label">Tín chỉ xanh</div>
+<div class="body">
+
+<!-- SCAN PAGE -->
+<div id="pg-scan" class="page on">
+  <div class="grid2">
+    <div class="card">
+      <div class="ct">Khai mở vòng đời mới</div>
+      <div class="tab-row">
+        <button class="tab on" onclick="switchInput('upload',this)">📁 Chọn ảnh từ máy</button>
+        <button class="tab" onclick="switchInput('camera',this)">📸 Chụp trực tiếp</button>
+      </div>
+      <div id="mode-upload">
+        <div class="drop" id="drop" onclick="document.getElementById('fi').click()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p>Nhấn để gửi gắm linh kiện cũ</p><p style="font-size:11px; margin-top:4px;">JPG, PNG — Bo mạch, IC, thiết bị</p>
+        </div>
+        <input type="file" id="fi" accept="image/*" style="display:none" onchange="loadImg(event)">
+        <img id="prev" alt="preview">
+      </div>
+      <div id="mode-camera" style="display:none">
+        <div class="cam-view" id="cam-view">
+          <div class="cam-off">Khởi động camera để nhìn rõ hơn</div>
+          <video id="cam-vid" autoplay playsinline style="display:none"></video>
+          <canvas id="cam-canvas" style="display:none"></canvas>
+          <div class="scan-line" id="scan-line" style="display:none"></div>
+        </div>
+        <div class="cam-btn-row">
+          <button class="btn btn-g" style="flex:1" onclick="startCam()">Mở ống kính</button>
+          <button class="btn btn-o" style="flex:1" onclick="captureFrame()" id="cap-btn" disabled>Chụp ảnh</button>
+          <button class="btn btn-red" onclick="stopCam()" id="stop-btn" disabled>Đóng</button>
+        </div>
+        <img id="cap-prev" style="width:100%;border-radius:10px;display:none;margin-bottom:16px;max-height:120px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.05)" alt="captured">
+      </div>
+      <button class="btn btn-g btn-w" id="scan-btn" onclick="doScan()" disabled>Phân tích giá trị bền vững</button>
     </div>
-    <div class="stat">
-      <div class="stat-val" id="s-boards">0</div>
-      <div class="stat-label">Bo mạch đã quét</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val" id="s-co2" style="color:#639922;">0g</div>
-      <div class="stat-label">CO₂ tiết kiệm</div>
+    
+    <div class="card">
+      <div class="ct">Kết tinh giá trị <span id="demo-tag" style="display:none;background:rgba(217,138,108,.15);color:#D98A6C;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px;font-weight:500">Bản Demo</span></div>
+      <div id="result-area"><div class="empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Câu chuyện của linh kiện sẽ hiện ra tại đây</div></div>
+      <div class="total-bar">
+        <span style="color:#707C74;font-size:12px;font-weight:500">Quà tặng tuần hoàn</span>
+        <span style="font-size:16px;font-weight:600;color:#6B8E76" id="total-vnd">— VND</span>
+      </div>
     </div>
   </div>
 
-  <div class="grid">
-
-    <div class="card">
-      <div class="card-title">Tải ảnh bo mạch</div>
-      <div id="drop-zone" onclick="document.getElementById('file-input').click()"
-           ondragover="event.preventDefault();this.classList.add('drag-over')"
-           ondragleave="this.classList.remove('drag-over')"
-           ondrop="handleDrop(event)">
-        <svg style="width:40px;height:40px;stroke:#1D9E75;fill:none;stroke-width:1.5" viewBox="0 0 24 24">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        <p>Nhấn để chọn ảnh hoặc kéo thả</p>
-        <p style="font-size:11px;margin-top:4px;">JPG, PNG — ảnh bo mạch PCB</p>
+  <!-- POST SECTION -->
+  <div class="card" id="post-section" style="display:none; border-color:#6B8E76; box-shadow:0 8px 24px rgba(107,142,118,0.1)">
+    <div class="ct" style="color:#6B8E76">Gửi gắm về Trạm Tái Sinh</div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:16px;background:#FAFAF8;padding:12px;border-radius:12px">
+      <div id="post-thumb" style="width:64px;height:64px;background:#E8EAE8;border-radius:10px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A8B0AB" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
       </div>
-      <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)">
-      <img id="preview" alt="preview">
-      <button class="btn" id="scan-btn" onclick="scan()" disabled>Phân tích linh kiện</button>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:600;color:#2C302B" id="post-summary">—</div>
+        <div style="font-size:12px;color:#707C74;margin-top:4px;line-height:1.4" id="post-details">—</div>
+      </div>
     </div>
-
-    <div class="card">
-      <div class="card-title">Kết quả nhận diện</div>
-      <div id="results-area">
-        <div class="empty">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/>
-            <line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/>
-            <line x1="9" y1="17" x2="12" y2="17"/>
-          </svg>
-          Tải ảnh lên và nhấn Phân tích
+    <div class="post-form" style="margin-top:0; border:none; padding:0">
+      <div class="section-label">Tên gọi cho món đồ</div>
+      <input class="inp" id="post-title" placeholder="VD: Mạch máy tính cũ lưu giữ kỷ niệm">
+      <div class="section-label">Gửi lại giá trị (VND)</div>
+      <input class="inp" id="post-price" type="number" placeholder="Nhập mức giá bạn mong muốn">
+      <div class="section-label">Hành trình trao gửi</div>
+      <div class="radio-group">
+        <div class="radio-opt sel" id="opt-dropoff" onclick="selOpt('dropoff')">
+          <p>🏪 Trạm thu gom gần nhất</p><span>Tiện lợi, vận động nhẹ nhàng</span>
+        </div>
+        <div class="radio-opt" id="opt-pickup" onclick="selOpt('pickup')">
+          <p>🚚 Chuyến xe xanh AI</p><span>Tối ưu lộ trình giảm phát thải (3-7 ngày)</span>
         </div>
       </div>
-      <div class="total-row">
-        <span class="total-label">Giá trị thu hồi ước tính</span>
-        <span class="total-val" id="total-vnd">— VND</span>
+      <div id="pickup-detail" style="display:none;background:#F4F7F5;border:1px solid #D1DFD6;border-radius:10px;padding:12px;margin-bottom:12px;font-size:12px;color:#52755C;line-height:1.5">
+        🌿 <strong>Điều phối thông minh:</strong> AI sẽ gom nhóm các điểm nhận quanh khu vực của bạn, tạo nên một hành trình di chuyển chung giúp tiết kiệm nhiên liệu và giảm lượng khí thải CO2 ra môi trường.
+      </div>
+      <div class="section-label">Điểm khởi hành</div>
+      <input class="inp" id="post-addr" placeholder="Số nhà, đường, phường/xã...">
+      <div class="inp-row" style="margin-bottom:12px">
+        <input class="inp" id="post-district" placeholder="Quận/Huyện" style="flex:1;margin-bottom:0">
+        <input class="inp" id="post-city" placeholder="Tỉnh/TP" style="flex:1;margin-bottom:0">
+      </div>
+      <div class="section-label">Kết nối với bạn</div>
+      <input class="inp" id="post-name" placeholder="Tên gọi thân thương">
+      <input class="inp" id="post-phone" placeholder="Số điện thoại liên lạc">
+      <textarea class="inp" id="post-note" placeholder="Câu chuyện hoặc lưu ý nhỏ (không bắt buộc)..." style="min-height:70px; resize:none"></textarea>
+      <button class="btn btn-g btn-w" onclick="submitPost()" style="font-size:14px; padding:12px">Bắt đầu hành trình tái sinh</button>
+    </div>
+  </div>
+</div>
+
+<!-- MARKET PAGE -->
+<div id="pg-market" class="page">
+  <div class="card" id="my-listings-card" style="display:none; background:#F4F7F5; border-color:#D1DFD6">
+    <div class="ct" style="color:#52755C">Góc sẻ chia của bạn</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="background:#FFFFFF;border-radius:10px;padding:12px;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.02)">
+        <div style="font-size:18px;font-weight:600;color:#6B8E76" id="ml-active">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:2px">Đang mở</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:10px;padding:12px;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.02)">
+        <div style="font-size:18px;font-weight:600;color:#D98A6C" id="ml-pending">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:2px">Đang di chuyển</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:10px;padding:12px;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.02)">
+        <div style="font-size:18px;font-weight:600;color:#8b8ff5" id="ml-done">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:2px">Đã cập bến</div>
       </div>
     </div>
-
+    <div id="my-listing-list" style="background:#FFFFFF; border-radius:12px; padding:0 12px"></div>
   </div>
 
+  <div class="filter-row">
+    <button class="filter-btn on" onclick="filterMarket('all',this)">Khám phá tất cả</button>
+    <button class="filter-btn" onclick="filterMarket('open',this)">Đang đợi bạn</button>
+    <button class="filter-btn" onclick="filterMarket('pending',this)">Đang trao tay</button>
+    <button class="filter-btn" onclick="filterMarket('done',this)">Vòng đời trọn vẹn</button>
+  </div>
+  <div class="listing-grid" id="market-grid"></div>
+  <div id="market-empty" style="display:none"><div class="empty" style="padding:60px 0"><svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="6.5"/></svg>Trạm tạm thời vắng vẻ. Trở lại sau nhé!</div></div>
+</div>
+
+<!-- HISTORY PAGE -->
+<div id="pg-history" class="page">
+  <div class="tab-row">
+    <button class="tab on" onclick="switchHTab('scan',this)">Dấu ấn nhận diện</button>
+    <button class="tab" onclick="switchHTab('sell',this)">Dấu ấn trao đi</button>
+    <button class="tab" onclick="switchHTab('tx',this)">Minh bạch ESG</button>
+  </div>
+  <div id="ht-scan" class="card"><div class="ct">Hành trình đánh thức đồ cũ</div><div id="h-scan-list"><div class="empty">Bạn chưa đánh thức món đồ nào</div></div></div>
+  <div id="ht-sell" class="card" style="display:none"><div class="ct">Những lần trao tay</div><div id="h-sell-list"><div class="empty">Khu vườn sẻ chia còn trống</div></div></div>
+  <div id="ht-tx" class="card" style="display:none">
+    <div class="ct">Dữ liệu bền vững (Mô phỏng ESG)</div>
+    <p style="font-size:12px; color:#707C74; margin-bottom:16px">Mỗi giao dịch và tín chỉ xanh đều được mã hóa để đảm bảo tính minh bạch trong báo cáo bền vững (ESG).</p>
+    <div id="h-tx-list"><div class="empty">Chưa có giao dịch phát sinh</div></div>
+  </div>
+</div>
+
+<!-- LEADERBOARD PAGE -->
+<div id="pg-leaderboard" class="page">
+  <div class="card">
+    <div class="ct" style="text-align:center; color:#52755C; font-size:13px">Khu Rừng Cộng Đồng</div>
+    <p style="font-size:12px; color:#707C74; text-align:center; margin-bottom:20px">Những người truyền cảm hứng mạnh mẽ nhất cho lối sống tuần hoàn.</p>
+    <div class="lb-row"><span style="font-size:14px;font-weight:700;width:24px;color:#D98A6C;text-align:center">1</span><div class="av" style="background:#FFF0E5;color:#D98A6C;border-color:#FCDCDC">NV</div><span style="flex:1;font-size:13px;font-weight:500">Nguyễn Văn An</span><span class="green" style="font-size:13px;font-weight:600">842 🌿</span></div>
+    <div class="lb-row"><span style="font-size:14px;font-weight:700;width:24px;color:#8E958F;text-align:center">2</span><div class="av" style="background:#E1F5EE;color:#085041;border-color:#C1E3D6">TT</div><span style="flex:1;font-size:13px;font-weight:500">Trần Thị Bích</span><span class="green" style="font-size:13px;font-weight:600">710 🌿</span></div>
+    <div class="lb-row"><span style="font-size:14px;font-weight:700;width:24px;color:#D6D2C4;text-align:center">3</span><div class="av" style="background:#F4F4F5;color:#4A4D46;border-color:#EEEBE3">LH</div><span style="flex:1;font-size:13px;font-weight:500">Lê Hoàng Cường</span><span class="green" style="font-size:13px;font-weight:600">598 🌿</span></div>
+    <div class="lb-row"><span style="font-size:13px;font-weight:600;width:24px;color:#A8B0AB;text-align:center">4</span><div class="av" style="background:#FAFAF8;color:#8E958F;border-color:#EEEBE3">BD</div><span style="flex:1;font-size:13px">Bùi Ngọc Duy</span><span class="green" style="font-size:13px;font-weight:600">421 🌿</span></div>
+    <div class="lb-row" id="my-lb-row" style="display:none;background:#F4F7F5;border-radius:12px;padding:12px;margin-top:16px;border:1px solid #D1DFD6">
+      <span style="font-size:13px;font-weight:700;width:24px;color:#6B8E76;text-align:center">Bạn</span>
+      <div class="av" style="background:#6B8E76;color:#FFF;border-color:#8FAD98">TÔI</div>
+      <span style="flex:1;font-size:13px;font-weight:600;color:#2C302B">Khu vườn của bạn</span>
+      <span class="green" style="font-size:14px;font-weight:700" id="my-lb-val">0 🌿</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="pg-profile" class="page">
+  <div class="card" style="background:linear-gradient(135deg, #F4F7F5, #FAFAF8); border-color:#D1DFD6">
+    <div class="ct" style="color:#52755C">Gieo mầm xanh</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#6B8E76" id="pp-credits">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">Tín chỉ xanh</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#4A4D46" id="pp-boards">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">Đã đánh thức</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#6B8E76" id="pp-co2">0g</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">CO₂ làm mát</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#D98A6C" id="pp-listing-active">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">Đang chờ đời mới</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#8b8ff5" id="pp-sold">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">Đã cập bến</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-size:20px;font-weight:600;color:#D98A6C" id="pp-vnd">0</div>
+        <div style="font-size:11px;color:#707C74;margin-top:4px">Quả ngọt (k)</div>
+      </div>
+    </div>
+    <div style="margin-bottom:8px;display:flex;justify-content:space-between; align-items:flex-end">
+      <span style="font-size:13px;font-weight:600;color:#2C302B">Hành trình của bạn</span>
+      <span style="font-size:12px;font-weight:600;color:#6B8E76;background:#FFF;padding:4px 10px;border-radius:20px;box-shadow:0 2px 4px rgba(0,0,0,0.03)" id="p-level">Hạt Mầm Xanh</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="p-prog" style="width:0%"></div></div>
+    <div style="font-size:11px;color:#707C74;margin-top:6px;text-align:right" id="p-prog-label">0 / 100 🌿</div>
+  </div>
+  <div class="card">
+    <div class="ct">Chuyển hóa giá trị</div>
+    <div class="reward-row"><div class="rw-icon">🎟️</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">Phiếu giảm giá xử lý rác lớn</div><div style="font-size:11px;color:#8E958F;margin-top:2px">100 🌿</div></div><button class="btn btn-o" style="font-size:12px;padding:6px 12px;border-radius:8px" onclick="redeem(100)">Trao đổi</button></div>
+    <div class="reward-row"><div class="rw-icon">🎗️</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">Chứng nhận Công dân tuần hoàn</div><div style="font-size:11px;color:#8E958F;margin-top:2px">200 🌿</div></div><button class="btn btn-o" style="font-size:12px;padding:6px 12px;border-radius:8px" onclick="redeem(200)">Trao đổi</button></div>
+    <div class="reward-row"><div class="rw-icon">🪴</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">Cây xanh văn phòng từ đối tác</div><div style="font-size:11px;color:#8E958F;margin-top:2px">500 🌿</div></div><button class="btn btn-o" style="font-size:12px;padding:6px 12px;border-radius:8px" onclick="redeem(500)">Trao đổi</button></div>
+  </div>
+</div>
+
+</div><!-- /body -->
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-detail">
+  <div class="modal">
+    <div class="modal-hdr"><h3 id="md-title">Câu chuyện của món đồ</h3><button class="close-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div id="md-img-wrap" style="width:100%;height:140px;background:#F4F7F5;border-radius:12px;margin-bottom:16px;overflow:hidden;display:flex;align-items:center;justify-content:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A8B0AB" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+      
+      <div class="section-label" style="font-size:11px; text-transform:uppercase; color:#8E958F; letter-spacing:1px">Hạt nhân giá trị</div>
+      <div style="margin-bottom:16px; background:#FAFAF8; border:1px solid #EEEBE3; border-radius:12px; padding:6px 16px" id="md-comps"></div>
+      
+      <div class="section-label" style="font-size:11px; text-transform:uppercase; color:#8E958F; letter-spacing:1px">Chặng đường đi</div>
+      <div style="background:#FAFAF8; border:1px solid #EEEBE3; border-radius:12px; padding:6px 16px; margin-bottom:20px" id="md-info"></div>
+      
+      <div class="section-label" style="font-size:11px; text-transform:uppercase; color:#8E958F; letter-spacing:1px">Kết nối sẻ chia</div>
+      <div style="background:#FFFFFF; border:1px solid #D6D2C4; border-radius:16px; padding:16px">
+        <div class="chat-area" id="chat-area"></div>
+        <div class="chat-inp-row">
+          <input class="chat-inp" id="chat-inp" placeholder="Hãy nói lời chào nhẹ nhàng..." onkeydown="if(event.key==='Enter')sendMsg()">
+          <button class="btn btn-g" style="border-radius:24px; padding:10px 20px" onclick="sendMsg()">Gửi</button>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="filter-btn" onclick="quickMsg('Món đồ này đang đợi chủ mới phải không bạn?')">Còn đợi chủ?</button>
+          <button class="filter-btn" onclick="quickMsg('Mình chia sẻ thêm về món đồ này nhé?')">Chia sẻ thêm?</button>
+          <button class="filter-btn" onclick="quickMsg('Mình muốn đón món đồ này về')">Đón về</button>
+        </div>
+      </div>
+      <div id="confirm-section" style="display:none;margin-top:16px">
+        <button class="btn btn-g btn-w" style="padding:14px; font-size:14px" onclick="confirmReceived()">Tái sinh thành công → Nhận Tín chỉ xanh 🌿</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// THAY DÒNG NÀY bằng URL Render của bạn
-const API_URL = "https://emining-backend.onrender.com";
+const COLORS={chip:"#6B8E76",capacitor:"#8B8FF5",connector:"#D98A6C",resistor:"#D85A30",transistor:"#185FA5",diode:"#D4537E"};
+const DEMO=[
+  {class:"chip",confidence:.91,value_vnd:45000,green_credits:15,co2_saved_g:120,metal:"Au, Ag"},
+  {class:"connector",confidence:.87,value_vnd:32000,green_credits:10,co2_saved_g:85,metal:"Au"},
+  {class:"capacitor",confidence:.82,value_vnd:8000,green_credits:3,co2_saved_g:22,metal:"Al"},
+  {class:"transistor",confidence:.76,value_vnd:12000,green_credits:4,co2_saved_g:35,metal:"Si"},
+  {class:"resistor",confidence:.71,value_vnd:2500,green_credits:1,co2_saved_g:8,metal:"Ni"},
+];
+const SAMPLE=[
+  {id:"s1",title:"Mạch máy tính gắn bó suốt thời sinh viên",comps:[{class:"chip",value_vnd:45000,green_credits:15,metal:"Au,Ag"},{class:"connector",value_vnd:32000,green_credits:10,metal:"Au"}],price:220000,status:"open",method:"pickup",addr:"Q.Bình Thạnh, TP.HCM",seller:"Trần Minh Tú",phone:"0901234567",note:"Mong tìm được trạm tái chế tử tế.",time:"28/04",co2:205,imgSrc:null,mine:false},
+  {id:"s2",title:"Linh kiện Server Dell cần đời sống mới",comps:[{class:"chip",value_vnd:45000,green_credits:15,metal:"Au,Ag"},{class:"capacitor",value_vnd:8000,green_credits:3,metal:"Al"}],price:350000,status:"done",method:"dropoff",addr:"Q.1, TP.HCM",seller:"Lê Thị Hoa",phone:"0912345678",note:"",time:"29/04",co2:142,imgSrc:null,mine:false},
+];
 
-const COLORS = {
-  chip: "#1D9E75", capacitor: "#534AB7", connector: "#EF9F27",
-  resistor: "#D85A30", transistor: "#185FA5", diode: "#D4537E",
-};
+let credits=0,boards=0,co2=0,totalVnd=0;
+let listings=[...SAMPLE];
+let scanResult=null,prevHash="0000000000000000";
+let scanHistory=[],sellHistory=[],txChain=[];
+let camStream=null,currentImgSrc=null;
+let currentListingId=null,pickupMode='dropoff';
+let chatHistory={};
 
-let totalCredits = 0, totalBoards = 0, totalCo2 = 0;
-let selectedFile = null;
-
-function handleDrop(e) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) loadPreview(file);
+function gp(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+name).classList.add('on');
+  btn.classList.add('on');
+  if(name==='market') renderMarket('all');
 }
-
-function handleFile(e) {
-  const file = e.target.files[0];
-  if (file) loadPreview(file);
+function switchInput(mode,btn){
+  document.querySelectorAll('#pg-scan .tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('mode-upload').style.display=mode==='upload'?'block':'none';
+  document.getElementById('mode-camera').style.display=mode==='camera'?'block':'none';
+  if(mode==='upload') stopCam();
 }
-
-function loadPreview(file) {
-  selectedFile = file;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const preview = document.getElementById('preview');
-    preview.src = e.target.result;
-    preview.style.display = 'block';
-    document.getElementById('scan-btn').disabled = false;
-    document.getElementById('drop-zone').style.display = 'none';
+async function startCam(){
+  try{
+    camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const v=document.getElementById('cam-vid');
+    v.srcObject=camStream;v.style.display='block';
+    document.querySelector('.cam-off').style.display='none';
+    document.getElementById('cap-btn').disabled=false;
+    document.getElementById('stop-btn').disabled=false;
+    document.getElementById('scan-line').style.display='block';
+  }catch(e){alert('Chưa thể mở ống kính. Bạn tải ảnh lên tạm nhé.');}
+}
+function stopCam(){
+  if(camStream){camStream.getTracks().forEach(t=>t.stop());camStream=null;}
+  const v=document.getElementById('cam-vid');
+  v.style.display='none';v.srcObject=null;
+  document.getElementById('scan-line').style.display='none';
+  document.getElementById('cap-btn').disabled=true;
+  document.getElementById('stop-btn').disabled=true;
+}
+function captureFrame(){
+  const v=document.getElementById('cam-vid');
+  const c=document.getElementById('cam-canvas');
+  c.width=v.videoWidth||640;c.height=v.videoHeight||480;
+  c.getContext('2d').drawImage(v,0,0,c.width,c.height);
+  const url=c.toDataURL('image/jpeg',.85);
+  const cp=document.getElementById('cap-prev');
+  cp.src=url;cp.style.display='block';
+  currentImgSrc=url;
+  document.getElementById('scan-btn').disabled=false;
+  stopCam();
+}
+function loadImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    const p=document.getElementById('prev');
+    p.src=ev.target.result;p.style.display='block';
+    currentImgSrc=ev.target.result;
+    document.getElementById('drop').style.display='none';
+    document.getElementById('scan-btn').disabled=false;
   };
-  reader.readAsDataURL(file);
+  r.readAsDataURL(f);
 }
-
-async function scan() {
-  if (!selectedFile) return;
-  const btn = document.getElementById('scan-btn');
-  const area = document.getElementById('results-area');
-  btn.disabled = true;
-  btn.textContent = 'Đang phân tích...';
-  area.innerHTML = `<div class="scanning"><div class="spinner"></div>AI đang nhận diện linh kiện...</div>`;
-
-  try {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
-    const res = await fetch(`${API_URL}/scan`, { method: 'POST', body: formData });
-    const data = await res.json();
-    renderResults(data);
-  } catch (err) {
-    // Nếu API chưa sẵn sàng, dùng demo data
-    renderResults({
-      status: "demo_mode",
-      components: [
-        { class: "chip", confidence: 0.91, value_vnd: 45000, green_credits: 15, co2_saved_g: 120, metal: "Au, Ag" },
-        { class: "connector", confidence: 0.87, value_vnd: 32000, green_credits: 10, co2_saved_g: 85, metal: "Au" },
-        { class: "capacitor", confidence: 0.82, value_vnd: 8000, green_credits: 3, co2_saved_g: 22, metal: "Al" },
-      ],
-      total_vnd: 85000,
-      total_credits: 28,
-    });
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Quét lại';
-  }
+function doScan(){
+  const btn=document.getElementById('scan-btn');
+  const area=document.getElementById('result-area');
+  btn.disabled=true;btn.textContent='Đang lắng nghe...';
+  area.innerHTML=`<div class="scanning"><div class="spin"></div>AI đang tìm hiểu vòng đời của linh kiện...</div>`;
+  document.getElementById('post-section').style.display='none';
+  setTimeout(()=>{
+    const items=DEMO.slice(0,Math.floor(Math.random()*3)+2);
+    renderResult(items,true);
+    btn.disabled=false;btn.textContent='Nhận diện món đồ khác';
+  },2000);
 }
-
-function renderResults(data) {
-  const area = document.getElementById('results-area');
-  const isDemo = data.status === "demo_mode";
-
-  if (!data.components || data.components.length === 0) {
-    area.innerHTML = `<div class="empty">Không tìm thấy linh kiện. Thử ảnh khác.</div>`;
-    document.getElementById('total-vnd').textContent = '0 VND';
-    return;
-  }
-
-  let html = '';
-  let co2Total = 0;
-
-  data.components.forEach(c => {
-    const color = COLORS[c.class] || '#8b949e';
-    co2Total += c.co2_saved_g || 0;
-    html += `
-      <div class="comp-item">
-        <div class="comp-dot" style="background:${color}"></div>
-        <div style="flex:1">
-          <div class="comp-name">${c.class.charAt(0).toUpperCase() + c.class.slice(1)}</div>
-          <div class="comp-val">Kim loại: ${c.metal} · Conf: ${Math.round(c.confidence * 100)}%</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:13px;font-weight:500">${c.value_vnd.toLocaleString()} đ</div>
-          <span class="comp-credit">+${c.green_credits} xanh</span>
-        </div>
-      </div>`;
+function renderResult(items,isDemo){
+  const area=document.getElementById('result-area');
+  document.getElementById('demo-tag').style.display=isDemo?'inline-block':'none';
+  scanResult=items;
+  let html='',vnd=0,sc=0,sco2=0;
+  items.forEach(c=>{
+    vnd+=c.value_vnd;sc+=c.green_credits;sco2+=c.co2_saved_g;
+    const col=COLORS[c.class]||'#8b949e';
+    const nm=c.class.charAt(0).toUpperCase()+c.class.slice(1);
+    html+=`<div class="comp-row"><div class="dot" style="background:${col}"></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">${nm}</div>
+      <div style="font-size:11px;color:#707C74;margin-top:2px">Khơi gợi: ${c.metal} · Tự tin ${Math.round(c.confidence*100)}%</div></div>
+      <div style="text-align:right"><div style="font-size:13px;font-weight:600;color:#4A4D46">${c.value_vnd.toLocaleString()}đ</div>
+      <span class="tag tag-g" style="margin-top:4px;display:inline-block">+${c.green_credits} 🌿</span></div></div>`;
   });
-
-  const demoTag = isDemo ? `<span class="badge-demo">Demo</span>` : '';
-  area.innerHTML = `<div style="display:flex;align-items:center;margin-bottom:8px">
-    <span style="font-size:12px;color:#8b949e;">${data.components.length} linh kiện phát hiện</span>${demoTag}
-  </div>${html}`;
-
-  document.getElementById('total-vnd').textContent = data.total_vnd.toLocaleString() + ' VND';
-
-  totalCredits += data.total_credits || 0;
-  totalBoards++;
-  totalCo2 += co2Total;
-  document.getElementById('s-credits').textContent = totalCredits;
-  document.getElementById('s-boards').textContent = totalBoards;
-  document.getElementById('s-co2').textContent = totalCo2 + 'g';
+  area.innerHTML=`<div style="font-size:11px;color:#707C74;margin-bottom:8px;font-weight:500">Đã tìm thấy ${items.length} phần tử có thể tái sinh</div>${html}`;
+  document.getElementById('total-vnd').textContent=vnd.toLocaleString()+' VND';
+  credits+=sc;boards++;co2+=sco2;totalVnd+=vnd;
+  const ts=now();
+  const txh=shash(`${boards}|${sc}|${ts}|${prevHash}`);prevHash=txh;
+  scanHistory.unshift({time:ts,count:items.length,vnd,credits:sc});
+  txChain.unshift({hash:txh,credits:sc,time:ts,type:'scan'});
+  updateStats();renderHistoryLists();
+  const ps=document.getElementById('post-section');
+  ps.style.display='block';
+  document.getElementById('post-summary').textContent=`Món đồ chứa ${items.length} phần tử tái tạo`;
+  document.getElementById('post-details').textContent=`Thành quả ước tính: ${vnd.toLocaleString()} VND · +${sc} 🌿`;
+  document.getElementById('post-price').value=Math.round(vnd*0.85);
+  if(currentImgSrc){
+    document.getElementById('post-thumb').innerHTML=`<img src="${currentImgSrc}" style="width:100%;height:100%;object-fit:cover">`;
+  }
 }
+function selOpt(v){
+  pickupMode=v;
+  document.getElementById('opt-dropoff').classList.toggle('sel',v==='dropoff');
+  document.getElementById('opt-pickup').classList.toggle('sel',v==='pickup');
+  document.getElementById('pickup-detail').style.display=v==='pickup'?'block':'none';
+}
+function submitPost(){
+  if(!scanResult){alert('Xin hãy cho ứng dụng nhìn thấy món đồ trước nhé!');return;}
+  const title=document.getElementById('post-title').value.trim()||'Gói linh kiện chờ tái sinh';
+  const price=parseInt(document.getElementById('post-price').value)||0;
+  const addr=[document.getElementById('post-addr').value,document.getElementById('post-district').value,document.getElementById('post-city').value].filter(Boolean).join(', ')||'TP.HCM';
+  const seller=document.getElementById('post-name').value||'Một người yêu môi trường';
+  const phone=document.getElementById('post-phone').value||'—';
+  const note=document.getElementById('post-note').value||'';
+  const sco2=scanResult.reduce((s,c)=>s+c.co2_saved_g,0);
+  const sc=scanResult.reduce((s,c)=>s+c.green_credits,0);
+  const newL={id:'u'+Date.now(),title,comps:scanResult.map(c=>({class:c.class,value_vnd:c.value_vnd,green_credits:c.green_credits,metal:c.metal})),price,status:'open',method:pickupMode,addr,seller,phone,note,time:now(),co2:sco2,imgSrc:currentImgSrc,mine:true};
+  listings.unshift(newL);
+  sellHistory.unshift({time:now(),title,price,status:'open',id:newL.id});
+  const txh=shash(`sell|${Date.now()}|${prevHash}`);prevHash=txh;
+  txChain.unshift({hash:txh,credits:sc,time:now(),type:'sell'});
+  updateStats();renderHistoryLists();
+  document.getElementById('post-section').style.display='none';
+  alert('✨ Tuyệt vời! Món đồ của bạn đã có mặt tại Trạm xanh.');
+}
+
+function renderMarket(filter){
+  const grid=document.getElementById('market-grid');
+  const empty=document.getElementById('market-empty');
+  const myCard=document.getElementById('my-listings-card');
+  const myListings=listings.filter(l=>l.mine);
+  if(myListings.length){
+    myCard.style.display='block';
+    document.getElementById('ml-active').textContent=myListings.filter(l=>l.status==='open').length;
+    document.getElementById('ml-pending').textContent=myListings.filter(l=>l.status==='pending').length;
+    document.getElementById('ml-done').textContent=myListings.filter(l=>l.status==='done').length;
+    document.getElementById('my-listing-list').innerHTML=myListings.slice(0,3).map(l=>{
+      const sc={open:'tag-g',pending:'tag-y',done:'tag-b'}[l.status];
+      const sl={open:'Đang đợi',pending:'Trên đường',done:'Đã trao'}[l.status];
+      return `<div class="my-listing-row" onclick="openModal('${l.id}')" style="cursor:pointer">
+        <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">${l.title}</div>
+        <div style="font-size:11px;color:#8E958F;margin-top:4px">${l.time}</div></div>
+        <div style="text-align:right"><div style="font-size:13px;color:#6B8E76;font-weight:600;margin-bottom:4px">${l.price.toLocaleString()}đ</div>
+        <span class="tag ${sc}">${sl}</span></div></div>`;
+    }).join('');
+  } else { myCard.style.display='none'; }
+
+  let items=filter==='all'?listings:listings.filter(l=>l.status===filter);
+  if(!items.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  grid.innerHTML=items.map(l=>{
+    const sc={open:'tag-g',pending:'tag-y',done:'tag-b'}[l.status];
+    const sl={open:'Sẵn sàng',pending:'Chờ giao',done:'Đã trao'}[l.status];
+    const mine=l.mine?`<span style="font-size:10px;background:#EDF2EE;color:#52755C;padding:2px 6px;border-radius:4px;margin-left:6px;font-weight:500">Của bạn</span>`:'';
+    const imgEl=l.imgSrc?`<img src="${l.imgSrc}" style="width:100%;height:120px;object-fit:cover">`:`<div class="listing-img"><svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="6.5"/></svg></div>`;
+    return `<div class="listing-card" onclick="openModal('${l.id}')">
+      ${imgEl}
+      <div class="listing-body">
+        <div class="listing-title">${l.title}${mine}</div>
+        <div class="listing-sub">Gồm ${l.comps.length} món · Trạm ${l.addr.split(',').pop().trim()}</div>
+        <div class="listing-footer"><span class="price">${l.price.toLocaleString()}đ</span><span class="tag ${sc}">${sl}</span></div>
+      </div></div>`;
+  }).join('');
+}
+function filterMarket(f,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderMarket(f);
+}
+function openModal(id){
+  const l=listings.find(x=>x.id===id);if(!l)return;
+  currentListingId=id;
+  document.getElementById('md-title').textContent=l.title;
+  document.getElementById('md-img-wrap').innerHTML=l.imgSrc?`<img src="${l.imgSrc}" style="width:100%;height:100%;object-fit:cover">`:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A8B0AB" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>`;
+  document.getElementById('md-comps').innerHTML=l.comps.map(c=>{const col=COLORS[c.class]||'#8b949e';const nm=c.class.charAt(0).toUpperCase()+c.class.slice(1);return`<div class="comp-row" style="padding:6px 0"><div class="dot" style="background:${col}"></div><div style="flex:1"><span style="font-size:13px;font-weight:600;color:#2C302B">${nm}</span> <span style="font-size:11px;color:#8E958F">· ${c.metal}</span></div><div style="text-align:right"><span style="font-size:13px;font-weight:500;color:#4A4D46">${c.value_vnd.toLocaleString()}đ</span> <span class="tag tag-g" style="background:transparent">+${c.green_credits}🌿</span></div></div>`}).join('');
+  const mt=l.method==='pickup'?'Chuyến xe xanh AI thu gom':'Gửi tại điểm trạm';
+  const sc={open:'🌱 Sẵn sàng tái sinh',pending:'🚚 Đang lăn bánh',done:'✅ Đã đến nơi bình yên'}[l.status];
+  document.getElementById('md-info').innerHTML=`<div class="info-row"><span class="il">Trạng thái</span><span style="font-weight:600;color:#4A4D46">${sc}</span></div><div class="info-row"><span class="il">Giá trị gửi lại</span><span style="color:#6B8E76;font-weight:700">${l.price.toLocaleString()} VND</span></div><div class="info-row"><span class="il">Hành trình</span><span style="font-weight:500;color:#4A4D46">${mt}</span></div><div class="info-row"><span class="il">Tại trạm</span><span style="text-align:right;max-width:60%;color:#4A4D46">${l.addr}</span></div><div class="info-row"><span class="il">Người ươm mầm</span><span style="font-weight:500;color:#4A4D46">${l.seller}</span></div><div class="info-row"><span class="il">Alo kết nối</span><span style="color:#4A4D46">${l.phone}</span></div>${l.note?`<div class="info-row"><span class="il">Lời nhắn</span><span style="font-style:italic;color:#707C74;text-align:right;max-width:60%">${l.note}</span></div>`:''}<div class="info-row"><span class="il">Góp phần làm mát</span><span style="color:#6B8E76;font-weight:600">${l.co2}g CO₂</span></div>`;
+  renderChat(id);
+  document.getElementById('confirm-section').style.display=l.status==='pending'?'block':'none';
+  document.getElementById('modal-detail').classList.add('on');
+}
+function closeModal(){document.getElementById('modal-detail').classList.remove('on');}
+function renderChat(id){
+  const area=document.getElementById('chat-area');
+  if(!chatHistory[id]) chatHistory[id]=[{me:false,text:'Xin chào, mình thấy bạn đang quan tâm đến món đồ này.',time:now()}];
+  area.innerHTML=chatHistory[id].map(m=>`<div class="msg ${m.me?'msg-me':'msg-other'}">${m.text}<div class="msg-time" style="${m.me?'color:#C1E3D6':'color:#A8B0AB'}">${m.time}</div></div>`).join('');
+  area.scrollTop=area.scrollHeight;
+}
+function sendMsg(){
+  const inp=document.getElementById('chat-inp');
+  const txt=inp.value.trim();if(!txt||!currentListingId)return;
+  chatHistory[currentListingId].push({me:true,text:txt,time:now()});
+  inp.value='';renderChat(currentListingId);
+  setTimeout(()=>{
+    const r=["Tuyệt quá, cảm ơn bạn đã trân trọng nó.","Bạn cần thêm thông tin gì cứ hỏi nhé.","Rất vui được kết nối với bạn.","Hi vọng món đồ sẽ có ích cho vòng đời mới.","Mình chờ tin từ bạn."][Math.floor(Math.random()*5)];
+    chatHistory[currentListingId].push({me:false,text:r,time:now()});
+    renderChat(currentListingId);
+  },900);
+}
+function quickMsg(t){document.getElementById('chat-inp').value=t;sendMsg();}
+function confirmReceived(){
+  const l=listings.find(x=>x.id===currentListingId);if(!l)return;
+  l.status='done';
+  const earned=l.comps.reduce((s,c)=>s+c.green_credits,0)*2;
+  credits+=earned;
+  updateStats();renderHistoryLists();
+  const txh=shash(`confirm|${Date.now()}|${prevHash}`);prevHash=txh;
+  txChain.unshift({hash:txh,credits:earned,time:now(),type:'confirm'});
+  document.getElementById('confirm-section').style.display='none';
+  alert(`🌿 Giao dịch trọn vẹn! Bạn đã gieo thêm ${earned} mầm xanh.`);
+  renderMarket('all');
+}
+function switchHTab(t,btn){
+  document.querySelectorAll('#pg-history .tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['scan','sell','tx'].forEach(n=>document.getElementById('ht-'+n).style.display=n===t?'block':'none');
+}
+function renderHistoryLists(){
+  document.getElementById('h-scan-list').innerHTML=scanHistory.length?scanHistory.map(h=>`<div class="hist-item"><div class="hist-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">Bo mạch — ${h.count} phần tử</div><div style="font-size:11px;color:#8E958F;margin-top:2px">${h.time}</div></div><div style="text-align:right;color:#6B8E76;font-size:14px;font-weight:600">+${h.credits} 🌿<br><span style="font-size:11px;color:#707C74;font-weight:500">${h.vnd.toLocaleString()}đ</span></div></div>`).join(''):`<div class="empty">Bạn chưa đánh thức món đồ nào</div>`;
+  document.getElementById('h-sell-list').innerHTML=sellHistory.length?sellHistory.map(h=>{const l=listings.find(x=>x.id===h.id);const st=l?l.status:'open';const sc={open:'tag-g',pending:'tag-y',done:'tag-b'}[st];const sl={open:'Sẵn sàng',pending:'Đang đi',done:'Đã trao'}[st];return`<div class="hist-item"><div class="hist-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:#2C302B">${h.title}</div><div style="font-size:11px;color:#8E958F;margin-top:2px">${h.time}</div></div><div style="text-align:right"><div style="font-size:13px;color:#D98A6C;font-weight:600;margin-bottom:4px">${h.price.toLocaleString()}đ</div><span class="tag ${sc}">${sl}</span></div></div>`}).join(''):`<div class="empty">Khu vườn sẻ chia còn trống</div>`;
+  const icons={scan:'🔍',sell:'🌱',confirm:'✅'};
+  document.getElementById('h-tx-list').innerHTML=txChain.length?txChain.map(t=>`<div class="tx-row"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-weight:600;color:#2C302B">${icons[t.type]||'📌'} ${t.type==='scan'?'Nhận diện':t.type==='sell'?'Gửi gắm':'Trọn vẹn'}</span><span style="color:#6B8E76;font-weight:600">+${t.credits} 🌿</span></div><div style="font-size:11px;color:#707C74;margin-bottom:6px">${t.time}</div><div class="tx-hash">Mã ESG: ${t.hash}</div></div>`).join(''):`<div class="empty">Chưa có dữ liệu bền vững nào được ghi nhận</div>`;
+}
+function updateStats(){
+  const myL=listings.filter(l=>l.mine);
+  const activeL=myL.filter(l=>l.status==='open').length;
+  const soldL=myL.filter(l=>l.status==='done').length;
+  const totalEarned=myL.filter(l=>l.status==='done').reduce((s,l)=>s+l.price,0);
+  document.getElementById('s-credits').textContent=credits;
+  document.getElementById('s-boards').textContent=boards;
+  document.getElementById('s-co2').textContent=co2+'g';
+  document.getElementById('s-listing-active').textContent=activeL;
+  document.getElementById('s-sold').textContent=soldL;
+  document.getElementById('s-vnd').textContent=Math.round(totalEarned/1000);
+  document.getElementById('pp-credits').textContent=credits;
+  document.getElementById('pp-boards').textContent=boards;
+  document.getElementById('pp-co2').textContent=co2+'g';
+  document.getElementById('pp-listing-active').textContent=activeL;
+  document.getElementById('pp-sold').textContent=soldL;
+  document.getElementById('pp-vnd').textContent=Math.round(totalEarned/1000);
+  document.getElementById('my-lb-val').textContent=credits+' 🌿';
+  document.getElementById('my-lb-row').style.display=credits>0?'flex':'none';
+  const LEVELS=[[0,'Hạt Mầm Xanh',100],[100,'Cây Non Vươn Cành',300],[300,'Tán Lá Che Chở',600],[600,'Khu Rừng Tuần Hoàn',1000],[1000,'Hệ Sinh Thái Xanh',9999]];
+  const lv=LEVELS.find(l=>credits<l[2])||LEVELS[4];
+  const prev_lv=LEVELS[LEVELS.indexOf(lv)-1];
+  const base=prev_lv?prev_lv[0]:0;
+  const pct=Math.min(100,Math.round((credits-base)/(lv[2]-base)*100));
+  document.getElementById('p-level').textContent=lv[1];
+  document.getElementById('p-prog').style.width=pct+'%';
+  document.getElementById('p-prog-label').textContent=`Bạn đã góp ${credits} / ${lv[2]} 🌿`;
+}
+function redeem(cost){
+  if(credits<cost){alert(`Chưa đủ mầm xanh bạn nhé. Cần ${cost} 🌿, bạn đang có ${credits} 🌿.`);return;}
+  credits-=cost;updateStats();alert(`✨ Đổi quà thành công! Bạn còn lại ${credits} 🌿.`);
+}
+function now(){return new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});}
+function shash(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i),h|=0;return Math.abs(h).toString(16).padStart(16,'0');}
+renderMarket('all');updateStats();
 </script>
 </body>
 </html>
